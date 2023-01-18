@@ -28,18 +28,23 @@ int main()
     std::vector<sf::Sprite> grassSprites;
     std::vector<sf::Sprite> stickSprites;
     int numGrassSpritesToAdd = 5;
+
+    //sprite origin point setup
+    grassSprite.setOrigin(grassTexture.getSize().x / 2, grassTexture.getSize().y / 2);
+    stickSprite.setOrigin(stickTexture.getSize().x / 2, stickTexture.getSize().y / 2);
+
     for (int i = 0; i < numGrassSpritesToAdd; ++i)
     {
         
         int colourTint = 100 + rand() % 155;
         float grassScaler = 1 + rand() % 2;
-        grassSprite.setPosition(sf::Vector2f(rand() % (window.getSize().x - grassTexture.getSize().x), rand() % (window.getSize().y - grassTexture.getSize().y)));
-        grassSprite.setColor(sf::Color(colourTint, colourTint, colourTint));
         grassSprite.setScale(grassScaler, grassScaler);
+        grassSprite.setPosition(sf::Vector2f(grassScaler * grassTexture.getSize().x/2 + rand() % (int)(window.getSize().x - grassScaler * grassTexture.getSize().x), grassScaler * grassTexture.getSize().y/2 + rand() % (int)(window.getSize().y - grassScaler * grassTexture.getSize().y)));
+        grassSprite.setColor(sf::Color(colourTint, colourTint, colourTint));
         grassSprites.push_back(grassSprite);
     }
     float stickRotation = rand() % 359;
-    stickSprite.setPosition(sf::Vector2f(rand() % (window.getSize().x - stickTexture.getSize().x), rand() % (window.getSize().y - stickTexture.getSize().y)));
+    stickSprite.setPosition(sf::Vector2f(stickTexture.getSize().x/2 + rand() % (window.getSize().x - stickTexture.getSize().x), stickTexture.getSize().y/2 + rand() % (window.getSize().y - stickTexture.getSize().y)));
     stickSprite.setRotation(stickRotation);
     stickSprites.push_back(stickSprite);
     
@@ -58,10 +63,6 @@ int main()
 
     //origin Example
     playerSprite.setOrigin(playerTexture.getSize().x / 2, playerTexture.getSize().y / 2);
-
-    //sprite origin point setup
-    grassSprite.setOrigin(grassTexture.getSize().x / 2, grassTexture.getSize().y / 2);
-    stickSprite.setOrigin(stickTexture.getSize().x / 2, stickTexture.getSize().y / 2);
 
     //load fonts
     sf::Font gameFont;
