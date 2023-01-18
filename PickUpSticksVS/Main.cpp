@@ -45,7 +45,7 @@ int main()
     
 
     // Position setup
-    playerSprite.setPosition(sf::Vector2f(0.0f, 100.0f));
+    playerSprite.setPosition(sf::Vector2f(0.0f + playerTexture.getSize().x / 2, 100.0f));
 
     // colour setup
     //playerSprite.setColor(sf::Color(250,250,250));
@@ -58,6 +58,10 @@ int main()
 
     //origin Example
     playerSprite.setOrigin(playerTexture.getSize().x / 2, playerTexture.getSize().y / 2);
+
+    //sprite origin point setup
+    grassSprite.setOrigin(grassTexture.getSize().x / 2, grassTexture.getSize().y / 2);
+    stickSprite.setOrigin(stickTexture.getSize().x / 2, stickTexture.getSize().y / 2);
 
     //load fonts
     sf::Font gameFont;
