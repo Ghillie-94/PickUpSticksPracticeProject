@@ -78,6 +78,7 @@ int main()
     sf::Text gameTitle;
     gameTitle.setFont(gameFont);
     gameTitle.setString("Pick Up Sticks");
+    gameTitle.setCharacterSize(50);
     float textWidth = gameTitle.getLocalBounds().width;
     gameTitle.setFillColor(sf::Color(227, 121, 59));
     gameTitle.setOutlineThickness(2);
@@ -100,6 +101,13 @@ int main()
     sf::Sound startSFX;
     startSFX.setBuffer(startSFXBuffer);
     startSFX.play();
+    
+    sf::Music music;
+    music.openFromFile("Assets/Music.ogg");
+    music.setVolume(65);
+    music.setLoop(true);
+    music.play();
+
 
 
 #pragma endregion
