@@ -1,4 +1,9 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
 
 int main()
 {
@@ -74,12 +79,27 @@ int main()
     gameTitle.setFont(gameFont);
     gameTitle.setString("Pick Up Sticks");
     float textWidth = gameTitle.getLocalBounds().width;
+    gameTitle.setFillColor(sf::Color(227, 121, 59));
+    gameTitle.setOutlineThickness(2);
+    gameTitle.setOutlineColor(sf::Color::Black);
+    gameTitle.setStyle(sf::Text::Bold);
     gameTitle.setPosition(window.getSize().x / 2.0f - textWidth/2.0f, 10.0f);
+    
+    
+
     //Score label
     sf::Text scoreLabel;
     scoreLabel.setFont(gameFont);
     scoreLabel.setString("Score: ");
     scoreLabel.setPosition(0.0f, 0.0f);
+
+    //Audio setup
+    sf::SoundBuffer startSFXBuffer;
+    startSFXBuffer.loadFromFile("Assets/Start.wav");
+
+    sf::Sound startSFX;
+    startSFX.setBuffer(startSFXBuffer);
+    startSFX.play();
 
 
 #pragma endregion
