@@ -108,7 +108,10 @@ int main()
     music.setLoop(true);
     music.play();
 
-
+    float xDir = (10 - rand() % 21)/10;
+    float yDir = (10 - rand() % 21)/10;
+    sf::Vector2f direction(xDir, yDir);
+    bool hasBlinkPrevUsed = false;
 
 #pragma endregion
 
@@ -134,6 +137,78 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+#pragma region Update
+        
+        //move the character
+        direction.x = 0;
+        direction.y = 0;
+
+        if (sf::Joystick::isConnected(0))
+        {
+            // joystick number 0 is connected
+
+            float axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+            float axisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+            float deadzone = 20;
+
+            if (abs(axisX) > deadzone)
+                direction.x = axisX / 100.0f;
+            if (abs(axisY) > deadzone)
+                direction.y = axisY / 100.0f;
+
+
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            direction.x = -1;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            direction.x = 1;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            direction.y = -1;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            direction.y = 1;
+        }
+        
+        
+
+        sf::Vector2f newPosition = playerSprite.getPosition() + direction*0.1f;
+        playerSprite.setPosition(newPosition);
+
+        //blink teleport
+        bool blinkPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::F) || sf::Joystick::isButtonPressed(0,0);
+
+        if (blinkPressed && !hasBlinkPrevUsed)
+        {
+
+            sf::Vector2f blinkPosition = playerSprite.getPosition() + direction * 125.0f;
+            playerSprite.setPosition(blinkPosition);
+        }
+        
+        hasBlinkPrevUsed = blinkPressed;
+
+        // spawn a stick when mouse clicked (debug only)
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            //get the mouse position
+            //get the local mouse position (relative to the window)
+            sf::Vector2i localPosition = sf::Mouse::getPosition(window); //window is a sf::window
+            sf::Vector2f mousePositionFloat = (sf::Vector2f)localPosition;
+
+            //spawn a stick at that position
+            stickSprite.setPosition(mousePositionFloat);
+            stickSprites.push_back(stickSprite);
+
+        }
+
+#pragma endregion
 
 #pragma endregion
 
